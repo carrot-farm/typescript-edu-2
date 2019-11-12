@@ -59,25 +59,4 @@ type T22 = Unpacked<Unpacked<Promise<string>>>; // string
 
 
 
-/** ============================
- *  조건부 타입으로 직접 만들어 보는 유틸리티 타입
- ============================ */
-// ===== 인터페이스에서 문자열 속성만 추출해서 사용하는 유틸리티 타입
-// 타입 T에서 값이 문자열인 모든 속성의 이름을 유니온 타입으로 만들어 주는 타입.
-type StringPropertyNames<T> = {
-  [K in keyof T]: T[K] extends String ? K : never
-}[keyof T]; // [keyof T]는 모든 인터페이스에서 모든 속성의 타입을 유니온으로 추출한다.(이때 never는 제거된다.)
-// StringProperties는 인터페이스에서 문자열인 모든 속성을 추출하는 유틸리티 타입이다.
-type StringProperties<T> = Pick<T, StringPropertyNames<T>>;
-interface Person {
-  name: string;
-  age: number;
-  nation: string;
-}
-type T23 = StringPropertyNames<Person>; // "name" |  "nation"
-type T24 = StringProperties<Person>; // {name: string; nation: string;}
 
-
-/** ============================
- *  일부 속성만 제거해 주는 유틸리티 타입
- ============================ */
